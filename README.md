@@ -1,5 +1,5 @@
 # AutoReplace
-You can make auto repainted mods with this enjoy !!!! (textures)
+You can make auto repainted mods with this or randomize the textures enjoy !!!! 
 
 You can use this on dumped textures from dolphin or any emulator that supports it
 
