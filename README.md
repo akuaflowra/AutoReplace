@@ -3,7 +3,7 @@ You can replace textures with random images or randomize the textures enjoy !!!!
 
 You can use this on dumped textures from dolphin or any emulator that supports it
 
-Tip: To dump all textures without playing the whole game, search up Hd texture pack of whatever game or use this program https://github.com/Venomalia/DolphinTextureExtraction-tool it onlu works for a handful of games tho
+Tip: To dump all textures without playing the whole game, search up Hd texture pack of whatever game or use this program https://github.com/Venomalia/DolphinTextureExtraction-tool it only works for a handful of games tho
 
 This script is open source under the Apache License 2.0 license so anyone can update it because I'm a beginner programmer in phython
 
