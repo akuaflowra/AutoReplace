@@ -1,43 +1,50 @@
+import tkinter as tk
+from tkinter import filedialog
 import os
 import random
 import time
 from itertools import cycle
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps  # type: ignore
 import ctypes
 
 # ---------------- Supported formats ----------------
 valid_exts = ('.png', '.jpg', '.jpeg', '.webp', '.bmp', '.tiff', '.gif')
 
 # ---------------- Ask for folders ----------------
-from tkinter import filedialog
-import tkinter as tk
 root = tk.Tk()
 root.withdraw()
 
-target_folder = filedialog.askdirectory(title="Select Target Folder (images to be replaced)")
+target_folder = filedialog.askdirectory(
+    title="Select the target folder (images/textures to be replaced)")
 if not target_folder:
-    ctypes.windll.user32.MessageBoxW(0, "No target folder selected!", "Error", 0x10)
+    ctypes.windll.user32.MessageBoxW(
+        0, "No target folder selected!", "Error", 0x10)
     exit(1)
 
-source_folder = filedialog.askdirectory(title="Select Source Folder (images to replace with)")
+source_folder = filedialog.askdirectory(
+    title="Select a source folder (images/textures to replace with)")
 if not source_folder:
-    ctypes.windll.user32.MessageBoxW(0, "No source folder selected!", "Error", 0x10)
+    ctypes.windll.user32.MessageBoxW(
+        0, "No source folder selected!", "Error", 0x10)
     exit(1)
 
 # ---------------- Options ----------------
 flip_choice = ctypes.windll.user32.MessageBoxW(
-    0, "Do you want the images to be flipped vertically?", "Option", 0x24
+    0, "Do you want the images to be flipped vertically? "
+    "(for some games this is necessary)", "Option", 0x24
 )
 flip_images = (flip_choice == 6)
 
 skip_transparency_choice = ctypes.windll.user32.MessageBoxW(
-    0, "Skip replacing images with transparency?", "Option", 0x24
+    0, "Skip replacing images with transparency? "
+    "(leaves out ui elements and text)", "Option", 0x24
 )
 skip_transparency = (skip_transparency_choice == 6)
 
 preserve_transparency_choice = ctypes.windll.user32.MessageBoxW(
-    0, "Preserve transparent pixels when replacing?", "Option", 0x24
+    0, "Preserve transparent pixels when replacing? "
+    "(cuts images around ui elements and text)", "Option", 0x24
 )
 preserve_transparency = (preserve_transparency_choice == 6)
 
@@ -53,7 +60,8 @@ for r, _, files in os.walk(source_folder):
         if f.lower().endswith(valid_exts):
             source_images.append(os.path.join(r, f))
 if not source_images:
-    ctypes.windll.user32.MessageBoxW(0, "No valid images found in source folder!", "Error", 0x10)
+    ctypes.windll.user32.MessageBoxW(
+        0, "No valid images found in source folder!", "Error", 0x10)
     exit(1)
 
 random.shuffle(source_images)
@@ -66,12 +74,15 @@ for r, _, files in os.walk(target_folder):
         if f.lower().endswith(valid_exts):
             target_images.append(os.path.join(r, f))
 if not target_images:
-    ctypes.windll.user32.MessageBoxW(0, "No valid images found in target folder!", "Error", 0x10)
+    ctypes.windll.user32.MessageBoxW(
+        0, "No valid images found in target folder!", "Error", 0x10)
     exit(1)
 
 total_targets = len(target_images)
 
 # ---------------- Worker function ----------------
+
+
 def process_image(i, target_path, source_path):
     try:
         target_img = Image.open(target_path)
@@ -107,6 +118,7 @@ def process_image(i, target_path, source_path):
     except Exception as e:
         print(f"[{i}/{total_targets}] ERROR with {target_path}: {e}")
         return "error"
+
 
 # ---------------- Main processing ----------------
 start_time = time.time()
@@ -145,4 +157,5 @@ summary_message = (
     f"Elapsed Time: {elapsed} seconds"
 )
 
-ctypes.windll.user32.MessageBoxW(0, summary_message, "Repaint Script - Summary", 0x40)
+ctypes.windll.user32.MessageBoxW(
+    0, summary_message, "AutoReplace Script - Summary", 0x40)
