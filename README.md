@@ -24,5 +24,5 @@ pip install pillow
 ```
 This will install the required dependency to run the script properly.
 
-This script was inspired by rsgmaker's Dolphin-Emulator-Texture-Randomizer:
+This script was inspired by rsgmaker's Dolphin Emulator Texture Randomizer:
 https://www.deviantart.com/rsgmaker/art/Dolphin-Emulator-Texture-Randomizer-1-0-628516614
